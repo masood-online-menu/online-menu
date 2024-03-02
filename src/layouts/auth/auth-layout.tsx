@@ -12,15 +12,7 @@ interface props {
 }
 
 export default function AuthLayout({ children }: props) {
-  const [restaurant, setRestaurant] = useState<RestaurantType[]>([]);
-
   const theme = useTheme();
-
-  useEffect(() => {
-    axios.get('/api/restaurant/get').then((res) => {
-      setRestaurant(res.data);
-    });
-  }, []);
   return (
     <Stack justifyContent="center" direction="row">
       <Stack
@@ -54,19 +46,7 @@ export default function AuthLayout({ children }: props) {
 
       <Stack sx={{ position: 'absolute', top: 31, left: 42 }}>
         <Typography variant="h4" color={theme.palette.primary.darker}>
-          <Stack
-            sx={{
-              borderRadius: '50%',
-              overflow: 'hidden',
-            }}
-          >
-            <Image
-              src={restaurant[0]?.image || '/assets/images/images/RLogo.jpg'}
-              alt="logo"
-              width={110}
-              height={110}
-            />
-          </Stack>
+          منو آنلاین
         </Typography>
       </Stack>
       <Stack

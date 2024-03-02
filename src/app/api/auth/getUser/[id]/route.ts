@@ -7,13 +7,12 @@ export async function GET(req: Request) {
   const url = req.url;
   const id = url.split('/');
   const os = id[6];
-  console.log(os)
   try {
     if (!id) {
       return new NextResponse('Missing info', { status: 400 });
     }
     const product = await prisma.user.findUnique({
-      include: { restaurant: true },
+      include: { restaurant: { include: { product: true, category: true } } },
       where: {
         id: os,
       },

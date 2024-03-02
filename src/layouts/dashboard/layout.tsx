@@ -12,7 +12,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
   const dispatch = useDispatch();
   const { user } = useAuthContext();
   dispatch(setRestaurant(user?.restaurant[0]));
-  dispatch(setColor(user?.restaurant[0].color))
+  dispatch(setColor(user?.restaurant[0]?.color || 'primary'));
 
   return (
     <Stack

@@ -6,9 +6,16 @@ const prisma = new PrismaClient();
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, category, price, description, image } = body;
+    const { name, category, price, description, image, restaurantId } = body;
 
-    if (!name || !category || !price || !description || !image) {
+    if (
+      !name ||
+      !category ||
+      !price ||
+      !description ||
+      !image ||
+      !restaurantId
+    ) {
       console.log(body);
       return new NextResponse('Missing info', { status: 400 });
     }
@@ -24,6 +31,7 @@ export async function POST(request: Request) {
             price,
             description,
             image,
+            resturantId: restaurantId,
           },
         },
       },

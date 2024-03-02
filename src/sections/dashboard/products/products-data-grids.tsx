@@ -1,3 +1,4 @@
+import { RootState } from '@/redux/store/store';
 import ActionsMenu from '@/utils/action-menu';
 import { Box } from '@mui/material';
 import {
@@ -10,6 +11,7 @@ import {
 import axios from 'axios';
 import Image from 'next/image';
 import React, { useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 export default function ProductsDataGrids() {
   const [page, setPage] = useState<number>(0);
@@ -17,6 +19,9 @@ export default function ProductsDataGrids() {
   const [rows, setRows] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const RestaurantId = useSelector(
+    (state: RootState) => state.restaurant.restaurant?.id
+  );
   const handlePageChange = (params: GridPaginationModel) => {
     setPage(params.page);
     setPageSize(params.pageSize);
@@ -24,11 +29,17 @@ export default function ProductsDataGrids() {
 
   useEffect(() => {
     setIsLoading(true);
-    axios.get('/api/product/get').then((res) => {
-      setRows(res.data);
-      setIsLoading(false);
-    });
-  }, []);
+    axios
+      .get('/api/product/get', {
+        headers: {
+          restaurantId: RestaurantId,
+        },
+      })
+      .then((res) => {
+        setRows(res.data);
+        setIsLoading(false);
+      });
+  }, [RestaurantId]);
 
   const columns = useMemo<GridColDef[]>(
     () => [
@@ -98,16 +109,22 @@ export default function ProductsDataGrids() {
             type="product"
             reloadData={() => {
               setIsLoading(true);
-              axios.get('/api/product/get').then((res) => {
-                setRows(res.data);
-                setIsLoading(false);
-              });
+              axios
+                .get('/api/product/get', {
+                  headers: {
+                    restaurantId: RestaurantId,
+                  },
+                })
+                .then((res) => {
+                  setRows(res.data);
+                  setIsLoading(false);
+                });
             }}
           />
         ),
       },
     ],
-    []
+    [RestaurantId]
   );
 
   return (

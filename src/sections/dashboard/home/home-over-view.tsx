@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Grid, Stack, Typography } from '@mui/material';
 import { CategoryType } from '@/@types/category/categoryType';
 import { ProductType } from '@/@types/products/productType';
 import moment from 'jalali-moment';
 import { useAuthContext } from '@/auth/hooks';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/store/store';
 
 interface Props {
   category: CategoryType[];
@@ -29,7 +27,7 @@ export default function HomeOverView(props: Props) {
             alignItems="center"
           >
             <Typography variant="h1" color="common.white">
-              {product.length || 0}
+              {product?.length || 0}
             </Typography>
             <Typography variant="caption" color="common.white">
               محصول
@@ -48,7 +46,7 @@ export default function HomeOverView(props: Props) {
             alignItems="center"
           >
             <Typography variant="h1" color="common.white">
-              {category.length || 0}
+              {category?.length || 0}
             </Typography>
             <Typography variant="caption" color="common.white">
               دسته بندی
@@ -68,7 +66,7 @@ export default function HomeOverView(props: Props) {
             //   direction="row"
           >
             <Typography variant="h1" color="common.white">
-              {target.diff(today, 'days')}
+              {target?.diff(today, 'days')}
             </Typography>
             <Typography variant="caption" color="common.white">
               روز دیگر به پایان می رسد

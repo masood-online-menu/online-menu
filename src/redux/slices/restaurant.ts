@@ -8,7 +8,7 @@ export interface RestaurantState {
 
 const initialState: RestaurantState = {
   restaurant: {
-    id: 0,
+    id: '0',
     name: '',
     slogan: '',
     image: '',
@@ -17,6 +17,8 @@ const initialState: RestaurantState = {
     instagram: '',
     workTime: '',
     color: 'primary',
+    product: [],
+    category: [],
   },
 };
 

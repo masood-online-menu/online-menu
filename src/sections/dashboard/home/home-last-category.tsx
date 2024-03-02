@@ -11,6 +11,8 @@ import Image from 'next/image';
 import { CategoryType } from '@/@types/category/categoryType';
 import ActionsMenu from '@/utils/action-menu';
 import axios from 'axios';
+import { paths } from '@/routes/paths';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   category: CategoryType[];
@@ -22,6 +24,7 @@ export default function HomeLastCategory(props: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const [rows, setRows] = useState<CategoryType[]>([]);
 
+  const router = useRouter();
   useEffect(() => {
     setRows(category);
   }, [category]);
@@ -80,6 +83,7 @@ export default function HomeLastCategory(props: Props) {
           variant="subtitle2"
           color="primary.main"
           sx={{ cursor: 'pointer' }}
+          onClick={() => router.push(paths.categories.root)}
         >
           دیدن همه
         </Typography>
@@ -100,7 +104,7 @@ export default function HomeLastCategory(props: Props) {
           disableRowSelectionOnClick
           onPaginationModelChange={handlePageChange}
           sx={{
-            height: rows.length === 0 ? 250 : 'auto',
+            height: rows?.length === 0 ? 250 : 'auto',
           }}
         />
       </Stack>

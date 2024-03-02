@@ -26,6 +26,9 @@ export default function CategoryNewEditForm({ currentCategory }: Props) {
 
   const router = useRouter();
   const color = useSelector((state: RootState) => state.setting.color);
+  const restaurant = useSelector(
+    (state: RootState) => state.restaurant.restaurant
+  );
 
   const NewCategorySchema = Yup.object().shape({
     name: Yup.string()
@@ -96,11 +99,16 @@ export default function CategoryNewEditForm({ currentCategory }: Props) {
         resetStates();
         router.push(paths.categories.root);
       } else {
-        await axios.post('/api/category/create', data).then((res) => {
-          toast.success(`دسته بندی  ${data.name} با موفقیت اضافه شد`);
-          resetStates();
-          router.push(paths.categories.root);
-        });
+        await axios
+          .post('/api/category/create', {
+            ...data,
+            restaurantId: restaurant.id,
+          })
+          .then((res) => {
+            toast.success(`دسته بندی  ${data.name} با موفقیت اضافه شد`);
+            resetStates();
+            router.push(paths.categories.root);
+          });
       }
     } catch (err) {
       toast.error(`خطایی رخ داده`);

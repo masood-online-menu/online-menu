@@ -6,16 +6,30 @@ const prisma = new PrismaClient();
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, image } = body;
+    const { name, image, restaurantId } = body;
 
-    if (!name || !image) {
+    if (!name || !image || !restaurantId) {
       console.log(body);
       return new NextResponse('Missing info', { status: 400 });
     }
-    const category = await prisma.category.create({
+    // const category = await prisma.category.create({
+    //   data: {
+    //     name,
+    //     image,
+    //   },
+    // });
+
+    const category = await prisma.resturant.update({
+      where: {
+        id: restaurantId,
+      },
       data: {
-        name,
-        image,
+        category: {
+          create: {
+            name,
+            image,
+          },
+        },
       },
     });
     return NextResponse.json(category);

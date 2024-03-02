@@ -34,7 +34,9 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
 
   const router = useRouter();
   const color = useSelector((state: RootState) => state.setting.color);
-
+  const RestaurantId = useSelector(
+    (state: RootState) => state.restaurant.restaurant.id
+  );
 
   const resetStates = () => {
     setIsImageAvalibal(false);
@@ -86,16 +88,22 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
   }, [currentProduct, defaultValues, reset]);
 
   useEffect(() => {
-    axios.get('/api/category/get').then((res) => {
-      console.log(res);
-      if (res.data.length === 0) {
-        setHasCategory(true);
-      } else {
-        setCategories(res.data);
-        setHasCategory(false);
-      }
-    });
-  }, []);
+    axios
+      .get('/api/category/get', {
+        headers: {
+          restaurantId: RestaurantId,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        if (res.data.length === 0) {
+          setHasCategory(true);
+        } else {
+          setCategories(res.data);
+          setHasCategory(false);
+        }
+      });
+  }, [RestaurantId]);
 
   //upload
   const uploadImage: React.ChangeEventHandler<HTMLInputElement> = async (e) => {
@@ -132,6 +140,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
           price: data.price,
           description: data.description,
           image: data.image,
+          restaurantId: RestaurantId,
         });
         toast.success(`محصول ${data.name} با موفقیت اضافه شد`);
         resetStates();
