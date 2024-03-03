@@ -5,6 +5,7 @@ const ROOTS = {
 
 export const paths = {
   auth: `${ROOTS.AUTH}`,
+  forgot: `${ROOTS.AUTH}/forgot-password`,
   dashboard: `${ROOTS.DASHBOARD}`,
   products: {
     root: `${ROOTS.DASHBOARD}/products`,
