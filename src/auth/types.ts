@@ -1,5 +1,3 @@
-import { LogoutOptions, RedirectLoginOptions, PopupLoginOptions } from '@auth0/auth0-react';
-
 // ----------------------------------------------------------------------
 
 export type ActionMapType<M extends { [index: string]: any }> = {
@@ -30,11 +28,12 @@ type CanRemove = {
   loginWithGithub?: () => Promise<void>;
   loginWithTwitter?: () => Promise<void>;
   //
-  loginWithPopup?: (options?: PopupLoginOptions) => Promise<void>;
-  loginWithRedirect?: (options?: RedirectLoginOptions) => Promise<void>;
-  //
   forgotPassword?: (email: string) => Promise<void>;
-  newPassword?: (email: string, code: string, password: string) => Promise<void>;
+  newPassword?: (
+    email: string,
+    code: string,
+    password: string
+  ) => Promise<void>;
 };
 
 export type JWTContextType = CanRemove & {
@@ -74,14 +73,3 @@ export type AmplifyContextType = CanRemove & {
 };
 
 // ----------------------------------------------------------------------
-
-export type Auth0ContextType = CanRemove & {
-  user: AuthUserType;
-  method: string;
-  loading: boolean;
-  authenticated: boolean;
-  unauthenticated: boolean;
-  loginWithPopup: (options?: PopupLoginOptions) => Promise<void>;
-  loginWithRedirect: (options?: RedirectLoginOptions) => Promise<void>;
-  logout: (options?: LogoutOptions) => Promise<void>;
-};
