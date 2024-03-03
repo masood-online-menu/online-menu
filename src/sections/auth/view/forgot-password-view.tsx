@@ -15,7 +15,6 @@ export default function ForgotPasswordView() {
     otp: OTP,
   });
 
-  console.log(OTP);
   return (
     <Stack>
       <Typography variant="h4">رمز عبور خود را فراموش کرده اید ؟</Typography>

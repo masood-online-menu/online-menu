@@ -26,7 +26,6 @@ export default function ForgotPasswordOtpForm(props: Props) {
       .matches(/^[0-9]+$/, 'لطفا کد ارسالی را به صورت عدد وارد کنید'),
   });
 
-  console.log(user);
   const methods = useForm({
     resolver: yupResolver(OtpFormSchema),
     defaultValues: {

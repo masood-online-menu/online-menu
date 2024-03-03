@@ -19,8 +19,12 @@ export default function AdminForm() {
     password: Yup.string()
       .label('کلمه عبور')
       .required('لطفا رمز عبور خود را وارد کنید')
-      .min(8)
-      .max(128),
+      .min(8, 'رمز عبور باید حداقل 8 کاراکتر باشد')
+      .max(128, 'رمز عبور باید حداکثر 128 کاراکتر باشد')
+      .matches(
+        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+        'رمز عبور باید حداقل شامل یک حرف و یک عدد باشد'
+      ),
     expireDate: Yup.date(),
     phoneNumber: Yup.string(),
     userType: Yup.string(),
