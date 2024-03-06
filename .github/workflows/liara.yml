@@ -10,18 +10,18 @@ jobs:
     strategy:
       matrix:
       node-version: [12.x]
-  steps:
-      name: Deploy-dashboard
-    - uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.PORT }}
-      script: |
-        cd /var/www/html/dashboard
-        git pull
-        npm install
-        npm run prisma generate
-        npm run build
-        pm2 restart all
+    steps:
+        name: Deploy-dashboard
+      - uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+        script: |
+          cd /var/www/html/dashboard
+          git pull
+          npm install
+          npm run prisma generate
+          npm run build
+          pm2 restart all
