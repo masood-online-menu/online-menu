@@ -19,4 +19,6 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
       - name: connect to server
-        run: ssh ${{ secrets.USERNAME }}@${{ secrets.HOST }}
+        run: |
+        sudo apt install openssh-client
+        ssh ${{ secrets.USERNAME }}@${{ secrets.HOST }}
