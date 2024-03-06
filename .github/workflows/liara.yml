@@ -10,8 +10,8 @@ jobs:
       matrix:
       node-version: [12.x]
   steps:
-    - name: Deploy-dashboard
-      uses: appleboy/ssh-action@master
+      name: Deploy-dashboard
+    - uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
