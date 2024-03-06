@@ -1,4 +1,4 @@
-name: CD-Liara
+name: Nextjs CI/CD
 on:
   push:
     branches:
@@ -6,15 +6,21 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - name: update-liara
-        env:
-          LIARA_TOKEN: ${{ secrets.LIARA_API_TOKEN }}
-        run: |
-          npm i -g @liara/cli@5
-          liara deploy --app="menu-online" --api-token="$LIARA_TOKEN" --no-app-logs --port=3000
+    strategy:
+      matrix:
+      node-version: [12.x]
+  steps:
+    - name: Deploy-dashboard
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+      script: |
+      cd /var/www/html/dashboard
+      git pull
+      npm install
+      npm run prisma generate
+      npm run build
+      pm2 restart all
