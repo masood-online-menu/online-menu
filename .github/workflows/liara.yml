@@ -5,20 +5,30 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  connect_to_server:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js 14.x to Build
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14.x
-        env:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-      - name: connect to server
+      # - uses: actions/checkout@v2
+      # - name: Use Node.js 14.x to Build
+      #   uses: actions/setup-node@v2
+      #   with:
+      #     node-version: 14.x
+      #   env:
+      #     host: ${{ secrets.HOST }}
+      #     username: ${{ secrets.USERNAME }}
+      #     password: ${{ secrets.PASSWORD }}
+      #     port: ${{ secrets.PORT }}
+      # - name: connect to server
+      #   run: |
+      #   ssh ${{ secrets.USERNAME }}@${{ secrets.HOST }}
+      - name: install ssh keys
+        # check this thread to understand why its needed:
+        # https://stackoverflow.com/a/70447517
         run: |
-        sudo apt install openssh-client
-        ssh ${{ secrets.USERNAME }}@${{ secrets.HOST }}
+          install -m 600 -D /dev/null ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.HOST }} > ~/.ssh/known_hosts
+      - name: connect and pull
+        run: ssh ${{ secrets.USERNAME }}@${{ secrets.HOST }} "cd ${{ secrets.WORK_DIR }} && git checkout ${{ secrets.MAIN_BRANCH }} && git pull && exit"
+      - name: cleanup
+        run: rm -rf ~/.ssh
