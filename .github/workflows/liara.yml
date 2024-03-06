@@ -13,6 +13,11 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 14.x
+        env:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
       - run: |
           cd /var/www/html/dashboard
           git pull
@@ -20,8 +25,3 @@ jobs:
           npm run prisma generate
           npm run build
           pm2 restart all
-        env:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
