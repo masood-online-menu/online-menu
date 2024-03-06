@@ -19,4 +19,4 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
       - name: connect to server
-        run: ssh -o StrictHostKeyChecking=no $username@$host
+        run: ssh -o StrictHostKeyChecking=no $username@$host 
