@@ -16,6 +16,7 @@ jobs:
       - name: Deploy to Server
         run: |
           ssh root@193.151.154.154 
+          S2@8mpuUP3#*
           'cd /var/www/html/dashboard && git pull origin main && npm install && npm run build && pm2 restart all'
         env:
           SERVER_SSH_USER: root
