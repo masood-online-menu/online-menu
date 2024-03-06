@@ -18,9 +18,9 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
       script: |
-      cd /var/www/html/dashboard
-      git pull
-      npm install
-      npm run prisma generate
-      npm run build
-      pm2 restart all
+        cd /var/www/html/dashboard
+        git pull
+        npm install
+        npm run prisma generate
+        npm run build
+        pm2 restart all
