@@ -5,24 +5,23 @@ on:
       - main
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [12.x]
-
     steps:
-        name: Deploy-dashboard
-      - uses: appleboy/ssh-action@master
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14.x to Build
+        uses: actions/setup-node@v2
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-        script: |
+          node-version: 14.x
+        run: |
           cd /var/www/html/dashboard
           git pull
           npm install
           npm run prisma generate
           npm run build
           pm2 restart all
+        env:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
