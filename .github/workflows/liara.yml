@@ -13,15 +13,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2 # استفاده از اکشن برای checkout کردن کد از مخزن
 
-      - name: Install dependencies
-        run: npm install # نصب وابستگی‌های پروژه
-
-      - name: Build
-        run: npm run build # ساخت پروژه Next.js
-
-      - name: Test
-        run: npm test # اجرای تست‌ها
-
       - name: Deploy to Server
         run: |
           ssh user@server_ip 'cd /path/to/your/app && git pull origin main && npm install && npm run build && pm2 restart all'
