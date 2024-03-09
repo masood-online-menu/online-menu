@@ -1,4 +1,7 @@
-import { RestaurantType } from '@/@types/restaurant/restaurantType';
+import {
+  RestaurantType,
+  ThemeIdType,
+} from '@/@types/restaurant/restaurantType';
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
@@ -19,6 +22,7 @@ const initialState: RestaurantState = {
     color: 'primary',
     product: [],
     category: [],
+    themeId: 'minimal',
   },
 };
 
@@ -29,8 +33,11 @@ export const restaurantSlice = createSlice({
     setRestaurant: (state, action: PayloadAction<RestaurantType>) => {
       state.restaurant = action.payload;
     },
+    setTheme: (state, action: PayloadAction<ThemeIdType>) => {
+      state.restaurant.themeId = action.payload;
+    },
   },
 });
 
-export const { setRestaurant } = restaurantSlice.actions;
+export const { setRestaurant, setTheme } = restaurantSlice.actions;
 export default restaurantSlice.reducer;

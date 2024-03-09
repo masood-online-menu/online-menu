@@ -43,6 +43,12 @@ export default function NavList() {
         icon="material-symbols:manage-accounts-rounded"
         link="/dashboard/management"
       />
+      <NavItem
+        active={pathname === '/dashboard/theme'}
+        title="مدیریت قالب"
+        icon="gridicons:themes"
+        link="/dashboard/theme"
+      />
       <NavItem title="خروج" icon="mingcute:exit-fill" action={logout} />
     </Stack>
   );

@@ -27,7 +27,11 @@ export default function NavItem(props: Props) {
         bgcolor: active ? `${color}.main` : 'transparent',
         borderRadius: 1,
         cursor: 'pointer',
-        color: active && 'white',
+        color: active
+          ? 'white'
+          : title === 'خروج'
+          ? 'error.main'
+          : 'text.primary',
         fontWeight: active && '700',
         gap: 3,
         '&:hover': {
