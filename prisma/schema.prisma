@@ -53,7 +53,7 @@ model Resturant {
   instagram String?
   workTime  String?
   color     String?    @default("primary")
-  themeId    String?    @default("minimal")
+  themeId   String?    @default("minimal")
   product   Product[]
   category  Category[]
   User      User?      @relation(fields: [userId], references: [id])
