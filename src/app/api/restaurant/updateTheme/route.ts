@@ -27,7 +27,7 @@ export async function POST(request: Request) {
               id,
             },
             data: {
-              themeId: themeId as string,
+              themeId,
             },
           },
         },
