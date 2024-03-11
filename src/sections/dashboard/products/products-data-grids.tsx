@@ -43,7 +43,7 @@ export default function ProductsDataGrids() {
 
   const columns = useMemo<GridColDef[]>(
     () => [
-      { field: 'id', headerName: 'کد یکتا', width: 250 },
+      { field: 'id', headerName: 'کد یکتا', width: 190 },
       {
         field: 'image',
         headerName: 'عکس محصول',
@@ -67,7 +67,7 @@ export default function ProductsDataGrids() {
       {
         field: 'description',
         headerName: 'توضیحات',
-        width: 300,
+        width: 150,
         editable: true,
       },
       {
@@ -80,7 +80,7 @@ export default function ProductsDataGrids() {
       },
       {
         field: 'price',
-        headerName: 'قیمت (تومان)',
+        headerName: 'قیمت(تومان)',
         type: 'number',
         width: 110,
         editable: true,
@@ -92,6 +92,33 @@ export default function ProductsDataGrids() {
             return 0;
           } else {
             return params.row.price;
+          }
+        },
+      },
+      {
+        field: 'discount',
+        headerName: 'تخفیف(%)',
+        width: 110,
+        valueGetter: (params: GridValueGetterParams) => {
+          return `%${((params.row.discount / params.row.price) * 100).toFixed(
+            0
+          )}`;
+        },
+      },
+      {
+        field: 'priceWithDiscount',
+        headerName: 'قیمت نهایی(تومان)',
+        type: 'number',
+        width: 110,
+        editable: true,
+        flex: 1,
+        align: 'left',
+        headerAlign: 'left',
+        valueGetter: (params: GridValueGetterParams) => {
+          if (!params.row.price) {
+            return 0;
+          } else {
+            return params.row.price - params.row.discount;
           }
         },
       },

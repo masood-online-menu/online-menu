@@ -51,6 +51,18 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
     category: Yup.string(),
     categoryObj: Yup.object(),
     price: Yup.string().required('قیمت نباید خالی باشد'),
+    discount: Yup.string().test(
+      'discount',
+      'تخفیف نباید بیشتر از قیمت باشد',
+      (value) => {
+        const discount = Number(value);
+        const price = Number(watch('price'));
+        if (discount > price) {
+          return false;
+        }
+        return true;
+      }
+    ),
   });
 
   const defaultValues: any = useMemo(
@@ -59,7 +71,8 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
       description: currentProduct?.description || '',
       image: currentProduct?.image || '',
       categoryObj: currentProduct?.category || {},
-      price: currentProduct?.price || 0,
+      price: currentProduct?.price || '0',
+      discount: currentProduct?.discount || '0',
     }),
     [currentProduct]
   );
@@ -129,6 +142,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
           price: data.price,
           description: data.description,
           image: data.image,
+          discount: data.discount,
         });
         toast.success(`محصول ${data.name} با موفقیت ویرایش شد`);
         resetStates();
@@ -141,6 +155,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
           description: data.description,
           image: data.image,
           restaurantId: RestaurantId,
+          discount: data.discount,
         });
         toast.success(`محصول ${data.name} با موفقیت اضافه شد`);
         resetStates();
@@ -191,8 +206,41 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
               getOptionLabel={(option: any) => option.name}
             />
           </Grid>
-          <Grid item xs={12} md={6}>
-            <RHFTextField name="price" label="قیمت محصول" inputMode="numeric" />
+          <Grid item xs={12} md={4}>
+            <RHFTextField
+              name="price"
+              label="قیمت محصول(تومان)"
+              inputMode="numeric"
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <RHFTextField
+              name="discount"
+              label="مقدار تخفیف(تومان)"
+              inputMode="numeric"
+              disabled={!watch('price') || watch('price') === '0'}
+              helperText={
+                watch('price') &&
+                watch('discount') &&
+                `${(
+                  (Number(watch('discount')) / Number(watch('price'))) *
+                  100
+                ).toFixed(0)}% تخفیف`
+              }
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <RHFTextField
+              name="-----"
+              label="قیمت نهایی محصول(تومان)"
+              inputMode="numeric"
+              disabled
+              value={
+                watch('price') &&
+                watch('discount') &&
+                Number(watch('price')) - Number(watch('discount'))
+              }
+            />
           </Grid>
 
           <Grid item xs={12}>

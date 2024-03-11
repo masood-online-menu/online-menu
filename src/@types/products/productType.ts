@@ -1,4 +1,4 @@
-import { CategoryType } from "../category/categoryType";
+import { CategoryType } from '../category/categoryType';
 
 export type ProductType = {
   id: number;
@@ -6,5 +6,6 @@ export type ProductType = {
   price: number;
   image: string;
   description: string;
+  discount?: string;
   category: CategoryType;
 };

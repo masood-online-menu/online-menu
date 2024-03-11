@@ -27,6 +27,7 @@ model Product {
   price       String
   image       String
   categoryId  String
+  discount    String?
 
   category    Category   @relation(fields: [categoryId], references: [id])
   Resturant   Resturant? @relation(fields: [resturantId], references: [id])

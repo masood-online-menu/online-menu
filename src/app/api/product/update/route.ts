@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, category, price, description, image, id } = body;
+    const { name, category, price, description, image, id, discount } = body;
 
     if (!name || !category || !price || !description || !image || !id) {
       console.log(body);
@@ -28,6 +28,7 @@ export async function POST(request: Request) {
               description,
               price,
               image,
+              discount,
             },
           },
         },

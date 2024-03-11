@@ -61,7 +61,7 @@ export default function HomeLastCategory(props: Props) {
         renderCell: (params: GridRenderCellParams<any>) => (
           <ActionsMenu
             data={params.row}
-            reloadData={() => () => {
+            reloadData={() => {
               setIsLoading(true);
               axios.get('/api/category/get').then((res) => {
                 setRows(res.data);
